@@ -169,6 +169,81 @@ namespace RedBlackTree
             Root.Color = ColorEnum.Black;
         }
 
+        public void Transplant(Node<T> u, Node<T> v)
+        {
+            if (u.Parent.IsNill())
+            {
+                Root = v;
+            }
+            else if (u == u.Parent.Left)
+            {
+                u.Parent.Left = v;
+            }
+            else
+            {
+                u.Parent.Right = v;
+            }
+
+            v.Parent = u.Parent;
+        }
+
+        public Node<T> TreeMinimum(Node<T> parent)
+        {
+            return null;
+        }
+
+        public void Delete(Node<T> z)
+        {
+            var y = z;
+            Node<T> x = null;
+            var originalColorY = y.Color;
+
+            if (z.Left.IsNill())
+            {
+                x = z.Right;
+                Transplant(z, z.Right);
+            }
+            else if (z.Right.IsNill()) 
+            {
+                x = z.Left;
+                Transplant(z, z.Left);
+            }
+            else
+            {
+                y = TreeMinimum(z.Right);
+                originalColorY = y.Color;
+                
+                x = y.Right;
+
+                if (y.Parent == z)
+                {
+                    x.Parent = y;
+                }
+                else
+                {
+                    Transplant(y, y.Right);
+                    y.Right = z.Right;
+                    y.Right.Parent = y;
+                }
+
+                Transplant(z, y);
+
+                y.Left = z.Left;
+                y.Left.Parent = y;
+                y.Color = z.Color;
+            }
+
+            if (originalColorY == ColorEnum.Black)
+            {
+                DeleteFixUp(x);
+            }
+        }
+
+        public void DeleteFixUp (Node<T> x) 
+        {
+            
+        }
+
         public List<Node<T>> InOrderTraversal()
         {
             return InOrderTraversalInner(new List<Node<T>>(), Root);
