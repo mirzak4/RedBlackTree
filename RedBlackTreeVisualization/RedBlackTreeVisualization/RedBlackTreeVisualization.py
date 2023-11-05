@@ -43,7 +43,7 @@ def visualize_binary_tree(root):
 def main():
     import os
     os.environ["PATH"] += os.pathsep + 'D:/Program Files (x86)/Graphviz2.38/bin/'
-    f = open("C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\Content\\rbt.json")
+    f = open("C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\RedBlackTree\\Content\\rbt.json")
     data = json.load(f)
     # root = jsonpickle.decode(data)
     root = json.dumps(data)
