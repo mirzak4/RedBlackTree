@@ -6,34 +6,34 @@ namespace RedBlackTree
 {
     internal class Program
     {
-        private static readonly string _path = "C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\Content\\";
+        private static readonly string _path = "C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\RedBlackTree\\Content\\";
         public static void Main(string[] args)
         {
             var redBlackTree = new RedBlackTree<int>();
 
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    var key = Random.Shared.Next(100);
-            //    Console.WriteLine($"Inserting key - {key}");
-            //    redBlackTree.Insert(new Node<int>()
-            //    {
-            //        Key = key,
-            //        Color = ColorEnum.Red
-            //    });
-            //}
+            for (int i = 0; i < 10; i++)
+            {
+                var key = Random.Shared.Next(100);
+                Console.WriteLine($"Inserting key - {key}");
+                redBlackTree.Insert(new Node<int>()
+                {
+                    Key = key,
+                    Color = ColorEnum.Red
+                });
+            }
 
-            //var inOrder = redBlackTree.InOrderTraversal();
+            var inOrder = redBlackTree.InOrderTraversal();
 
-            //var randIndex = Random.Shared.Next(inOrder.Count);
+            var randIndex = Random.Shared.Next(inOrder.Count);
 
-            //var nodeToDelete = inOrder[randIndex];
+            var nodeToDelete = inOrder[randIndex];
 
-            //Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
+            Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
 
-            //redBlackTree.Delete(nodeToDelete);
+            redBlackTree.Delete(nodeToDelete);
 
-            //var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
+            var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
 
             //Console.WriteLine($"Number of elements left: {inOrderAfterDeletion.Count}");
 
@@ -84,29 +84,29 @@ namespace RedBlackTree
             //}
             #endregion
 
-            var keys = new List<int>() { 71, 53, 11, 58, 21, 19, 16, 66, 33, 42 };
-            Node<int> nodeToDelete2 = null;
+            //var keys = new List<int>() { 71, 53, 11, 58, 21, 19, 16, 66, 33, 42 };
+            //Node<int> nodeToDelete2 = null;
 
-            for (int i = 0; i < 10; i++)
-            {
-                //var key = Random.Shared.Next(100);
-                //Console.WriteLine($"Inserting key - {key}");
-                var nodeToInsert = new Node<int>()
-                {
-                    Key = keys[i],
-                    Color = ColorEnum.Red
-                };
-                redBlackTree.Insert(nodeToInsert);
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    //var key = Random.Shared.Next(100);
+            //    //Console.WriteLine($"Inserting key - {key}");
+            //    var nodeToInsert = new Node<int>()
+            //    {
+            //        Key = keys[i],
+            //        Color = ColorEnum.Red
+            //    };
+            //    redBlackTree.Insert(nodeToInsert);
 
-                if (keys[i] == 66)
-                {
-                    nodeToDelete2 = nodeToInsert;
-                }
-            }
+            //    if (keys[i] == 66)
+            //    {
+            //        nodeToDelete2 = nodeToInsert;
+            //    }
+            //}
 
-            redBlackTree.Delete(nodeToDelete2);
+            //redBlackTree.Delete(nodeToDelete2);
 
-            var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
+            //var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
 
             JsonSerializerOptions options = new()
             {
@@ -114,13 +114,13 @@ namespace RedBlackTree
                 WriteIndented = true
             };
             string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-            Console.WriteLine(json);
 
             try
             {
                 using (var streamWriter = new StreamWriter(_path + "rbt.json", false))
                 {
                     streamWriter.Write(json);
+                    Console.Write("Graph structure have been written to file");
                 }
             }
             catch (Exception ex) 
