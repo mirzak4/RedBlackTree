@@ -1,10 +1,16 @@
-﻿namespace RedBlackTree
+﻿using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace RedBlackTree
 {
     internal class Program
     {
+        private static readonly string _path = "C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\Content\\";
         public static void Main(string[] args)
         {
             var redBlackTree = new RedBlackTree<int>();
+
 
             //for (int i = 0; i < 10; i++)
             //{
@@ -18,52 +24,118 @@
             //}
 
             //var inOrder = redBlackTree.InOrderTraversal();
-            //Console.WriteLine($"Inorder Traversal of Red Black Tree at the end: {inOrder.Count}");
-            //foreach (var node in inOrder)
+
+            //var randIndex = Random.Shared.Next(inOrder.Count);
+
+            //var nodeToDelete = inOrder[randIndex];
+
+            //Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
+
+            //redBlackTree.Delete(nodeToDelete);
+
+            //var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
+
+            //Console.WriteLine($"Number of elements left: {inOrderAfterDeletion.Count}");
+
+            //foreach (var node in inOrderAfterDeletion)
             //{
-            //    Console.WriteLine($"Key: {node.Key} | Parent: {node.Parent?.Key} | Color: {node.Color}");
+            //    Console.WriteLine($"Key: {node.Key} | Parent: {node.Parent?.Key}");
             //}
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Welcome to Red Black Tree Console App");
+            #region Main App
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.WriteLine("Welcome to Red Black Tree Console App");
 
-            Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Exit");
+            //Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Exit");
 
-            var done = false;
-            while (!done)
+            //var done = false;
+            //while (!done)
+            //{
+            //    Console.Write("Pick option: ");
+            //    var option = Console.ReadLine();
+
+            //    switch (option)
+            //    {
+            //        case "1":
+            //            Console.Write("Enter new key: ");
+            //            int key;
+            //            if (int.TryParse(Console.ReadLine(), out key))
+            //            {
+            //                redBlackTree.Insert(new Node<int>()
+            //                {
+            //                    Key = key,
+            //                });
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("Wrong input");
+            //            }
+            //            break;
+            //        case "2":
+            //            foreach (var node in redBlackTree.InOrderTraversal())
+            //            {
+            //                Console.WriteLine($"Key: {node.Key} | Color: {node.Color}");
+            //            }
+            //            break;
+            //        default:
+            //            done = true;
+            //            break;
+            //    }
+            //}
+            #endregion
+
+            var keys = new List<int>() { 71, 53, 11, 58, 21, 19, 16, 66, 33, 42 };
+            Node<int> nodeToDelete2 = null;
+
+            for (int i = 0; i < 10; i++)
             {
-                Console.Write("Pick option: ");
-                var option = Console.ReadLine();
-                
-                switch(option)
+                //var key = Random.Shared.Next(100);
+                //Console.WriteLine($"Inserting key - {key}");
+                var nodeToInsert = new Node<int>()
                 {
-                    case "1":
-                        Console.Write("Enter new key: ");
-                        int key;
-                        if (int.TryParse(Console.ReadLine(), out key))
-                        {
-                            redBlackTree.Insert(new Node<int>()
-                            {
-                                Key = key,
-                            });
-                        }
-                        else
-                        {
-                            Console.WriteLine("Wrong input");
-                        }
-                        break;
-                    case "2":
-                        foreach (var node in redBlackTree.InOrderTraversal())
-                        {
-                            Console.WriteLine($"Key: {node.Key} | Color: {node.Color}");
-                        }
-                        break;
-                    default:
-                        done = true;
-                        break;
+                    Key = keys[i],
+                    Color = ColorEnum.Red
+                };
+                redBlackTree.Insert(nodeToInsert);
+
+                if (keys[i] == 66)
+                {
+                    nodeToDelete2 = nodeToInsert;
                 }
             }
 
+            redBlackTree.Delete(nodeToDelete2);
+
+            var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
+
+            JsonSerializerOptions options = new()
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            Console.WriteLine(json);
+
+            try
+            {
+                using (var streamWriter = new StreamWriter(_path + "rbt.json", false))
+                {
+                    streamWriter.Write(json);
+                }
+            }
+            catch (Exception ex) 
+            {
+                Console.Write(ex.Message);
+            }
+
+
+
+            //Console.WriteLine($"Number of elements left: {inOrderAfterDeletion.Count}");
+
+            //foreach (var node in inOrderAfterDeletion)
+            //{
+            //    Console.WriteLine($"Key: {node.Key} | Parent: {node.Parent?.Key}");
+            //}
         }
     }
 }

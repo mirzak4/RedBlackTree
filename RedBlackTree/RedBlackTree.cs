@@ -184,43 +184,59 @@ namespace RedBlackTree
                 u.Parent.Right = v;
             }
 
-            v.Parent = u.Parent;
+            if (!v.IsNill())
+            {
+                v.Parent = u.Parent;
+            }
         }
 
-        public Node<T> TreeMinimum(Node<T> parent)
+        public Node<T> TreeMinimum(Node<T> x)
         {
-            return null;
+            while (!x.Left.IsNill())
+            {
+                x = x.Left;
+            }
+            return x;
         }
 
         public void Delete(Node<T> z)
         {
             var y = z;
-            Node<T> x = null;
             var originalColorY = y.Color;
 
+            Node<T> x;
             if (z.Left.IsNill())
             {
+                // z has only right child
                 x = z.Right;
                 Transplant(z, z.Right);
             }
-            else if (z.Right.IsNill()) 
+            else if (z.Right.IsNill())
             {
+                // z has only left child
                 x = z.Left;
                 Transplant(z, z.Left);
             }
             else
             {
+                // z has both children, find smallest element in the z's right subtree
                 y = TreeMinimum(z.Right);
                 originalColorY = y.Color;
-                
+
                 x = y.Right;
 
                 if (y.Parent == z)
                 {
-                    x.Parent = y;
+                    // y is z's right child
+                    if (!x.IsNill())
+                    {
+                        x.Parent = y;
+                    }
                 }
                 else
                 {
+                    // y is placed on the last left node of z's right subtree
+                    // make sure y's right child takes y's place
                     Transplant(y, y.Right);
                     y.Right = z.Right;
                     y.Right.Parent = y;
