@@ -230,6 +230,8 @@ namespace RedBlackTree
                     // y is z's right child
                     if (!x.IsNill())
                     {
+                        // Since y is now taking place of z, and x will be its right child,
+                        // we don't want Transplant method to set x parent reference to removed node z
                         x.Parent = y;
                     }
                 }
@@ -257,7 +259,91 @@ namespace RedBlackTree
 
         public void DeleteFixUp (Node<T> x) 
         {
-            
+            if (x.IsNill())
+            {
+                return;
+            }
+
+            while (x != Root && x.Color == ColorEnum.Black)
+            {
+                if (x == x.Parent.Left)
+                {
+                    Node<T> w = x.Parent.Right;
+
+                    // 1st case: x's sibling w is red - convert to case 2/3/4
+                    if (w.Color == ColorEnum.Red)
+                    {
+                        w.Color = ColorEnum.Black;
+                        x.Parent.Color = ColorEnum.Red;
+                        LeftRotate(x.Parent);
+                        w = x.Parent.Right;
+                    }
+
+                    // 2nd case: w's both childs are black
+                    if ((w.Left.IsNill() || w.Left.Color == ColorEnum.Black) && (w.Right.IsNill() || w.Right.Color == ColorEnum.Black))
+                    {
+                        w.Color = ColorEnum.Red;
+                        x = x.Parent;
+                    }
+                    else
+                    {
+                        // 3rd case: w's right child is black and left child is red - conver to case 4
+                        if (w.Right.IsNill() || w.Right.Color == ColorEnum.Black)
+                        {
+                            w.Left.Color = ColorEnum.Black;
+                            w.Color = ColorEnum.Red;
+                            RightRotate(w);
+                            w = x.Parent.Right;
+                        }
+                        // 4th case: w's right child is red
+                        w.Color = x.Parent.Color;
+                        x.Parent.Color = ColorEnum.Black;
+                        w.Right.Color = ColorEnum.Black;
+                        LeftRotate(x.Parent);
+                        x = Root;
+                    }
+                }
+                else
+                {
+                    // Same but symetric
+                    Node<T> w = x.Parent.Left;
+
+                    // 1st case: x's sibling w is red - convert to case 2/3/4
+                    if (w.Color == ColorEnum.Red)
+                    {
+                        w.Color = ColorEnum.Black;
+                        x.Parent.Color = ColorEnum.Red;
+                        RightRotate(x.Parent);
+                        w = x.Parent.Left;
+                    }
+
+                    // 2nd case: w's both childs are black
+                    if ((w.Left.IsNill() || w.Left.Color == ColorEnum.Black) && (w.Right.IsNill() || w.Right.Color == ColorEnum.Black))
+                    {
+                        w.Color = ColorEnum.Red;
+                        x = x.Parent;
+                    }
+                    else
+                    {
+                        // 3rd case: w's left child is black and right child is red - conver to case 4
+                        if (w.Left.IsNill() || w.Left.Color == ColorEnum.Black)
+                        {
+                            w.Right.Color = ColorEnum.Black;
+                            w.Color = ColorEnum.Red;
+                            LeftRotate(w);
+                            w = x.Parent.Left;
+                        }
+                        // 4th case: w's left child is red
+                        w.Color = x.Parent.Color;
+                        x.Parent.Color = ColorEnum.Black;
+                        w.Left.Color = ColorEnum.Black;
+                        RightRotate(x.Parent);
+                        x = Root;
+                    }
+                }
+            }
+
+            x.Color = ColorEnum.Black;
         }
 
         public List<Node<T>> InOrderTraversal()

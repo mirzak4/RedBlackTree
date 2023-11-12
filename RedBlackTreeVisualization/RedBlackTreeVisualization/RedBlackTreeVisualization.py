@@ -9,7 +9,7 @@ import graphviz
 
 def visualize_binary_tree(root):
     dot = graphviz.Digraph(strict=1)
-    dot.node(str(root["Key"]))
+    dot.node(str(root["Key"]), style="filled", fillcolor="Black", fontcolor="white")
 
     def add_nodes_edges(node):
         if node["Left"]:

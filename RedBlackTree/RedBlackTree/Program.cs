@@ -33,7 +33,7 @@ namespace RedBlackTree
 
             redBlackTree.Delete(nodeToDelete);
 
-            var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
+            //var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
 
             //Console.WriteLine($"Number of elements left: {inOrderAfterDeletion.Count}");
 
@@ -84,7 +84,7 @@ namespace RedBlackTree
             //}
             #endregion
 
-            //var keys = new List<int>() { 71, 53, 11, 58, 21, 19, 16, 66, 33, 42 };
+            //var keys = new List<int>() { 8, 20, 74, 88, 80, 79, 26, 59, 82, 21 };
             //Node<int> nodeToDelete2 = null;
 
             //for (int i = 0; i < 10; i++)
@@ -98,7 +98,7 @@ namespace RedBlackTree
             //    };
             //    redBlackTree.Insert(nodeToInsert);
 
-            //    if (keys[i] == 66)
+            //    if (keys[i] == 8)
             //    {
             //        nodeToDelete2 = nodeToInsert;
             //    }
@@ -123,7 +123,7 @@ namespace RedBlackTree
                     Console.Write("Graph structure have been written to file");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.Write(ex.Message);
             }
