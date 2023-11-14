@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -6,85 +7,51 @@ namespace RedBlackTree
 {
     internal class Program
     {
-        private static readonly string _path = "C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\RedBlackTree\\Content\\";
+        private static readonly string _jsonPath = "C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\RedBlackTree\\Content\\";
         public static void Main(string[] args)
         {
             var redBlackTree = new RedBlackTree<int>();
 
-
-            for (int i = 0; i < 10; i++)
-            {
-                var key = Random.Shared.Next(100);
-                Console.WriteLine($"Inserting key - {key}");
-                redBlackTree.Insert(new Node<int>()
-                {
-                    Key = key,
-                    Color = ColorEnum.Red
-                });
-            }
-
-            var inOrder = redBlackTree.InOrderTraversal();
-
-            var randIndex = Random.Shared.Next(inOrder.Count);
-
-            var nodeToDelete = inOrder[randIndex];
-
-            Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
-
-            redBlackTree.Delete(nodeToDelete);
-
-            //var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
-
-            //Console.WriteLine($"Number of elements left: {inOrderAfterDeletion.Count}");
-
-            //foreach (var node in inOrderAfterDeletion)
+            #region Random Test
+            //for (int i = 0; i < 40; i++)
             //{
-            //    Console.WriteLine($"Key: {node.Key} | Parent: {node.Parent?.Key}");
+            //    var key = Random.Shared.Next(100);
+            //    Console.WriteLine($"Inserting key - {key}");
+            //    redBlackTree.Insert(new Node<int>()
+            //    {
+            //        Key = key,
+            //        Color = ColorEnum.Red
+            //    });
             //}
 
-            #region Main App
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine("Welcome to Red Black Tree Console App");
+            //var inOrder = redBlackTree.InOrderTraversal();
 
-            //Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Exit");
+            //var deleteIndexes = new List<int>();
 
-            //var done = false;
-            //while (!done)
+            //for(int i = 0;i < 10; i++)
             //{
-            //    Console.Write("Pick option: ");
-            //    var option = Console.ReadLine();
+            //    var randIndex = Random.Shared.Next(inOrder.Count);
 
-            //    switch (option)
+            //    if (!deleteIndexes.Contains(randIndex))
             //    {
-            //        case "1":
-            //            Console.Write("Enter new key: ");
-            //            int key;
-            //            if (int.TryParse(Console.ReadLine(), out key))
-            //            {
-            //                redBlackTree.Insert(new Node<int>()
-            //                {
-            //                    Key = key,
-            //                });
-            //            }
-            //            else
-            //            {
-            //                Console.WriteLine("Wrong input");
-            //            }
-            //            break;
-            //        case "2":
-            //            foreach (var node in redBlackTree.InOrderTraversal())
-            //            {
-            //                Console.WriteLine($"Key: {node.Key} | Color: {node.Color}");
-            //            }
-            //            break;
-            //        default:
-            //            done = true;
-            //            break;
+            //        deleteIndexes.Add(randIndex);
             //    }
+            //    else
+            //    {
+            //        i--;
+            //    }
+            //}
+
+            //foreach(var index in deleteIndexes) 
+            //{
+            //    var nodeToDelete = inOrder[index];
+            //    redBlackTree.Delete(nodeToDelete);
+            //    Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
             //}
             #endregion
 
-            //var keys = new List<int>() { 8, 20, 74, 88, 80, 79, 26, 59, 82, 21 };
+            #region Custom Test
+            //var keys = new List<int>() { 55, 59, 55, 34, 96, 53, 51, 71, 33, 70 };
             //Node<int> nodeToDelete2 = null;
 
             //for (int i = 0; i < 10; i++)
@@ -98,7 +65,7 @@ namespace RedBlackTree
             //    };
             //    redBlackTree.Insert(nodeToInsert);
 
-            //    if (keys[i] == 8)
+            //    if (keys[i] == 71)
             //    {
             //        nodeToDelete2 = nodeToInsert;
             //    }
@@ -107,35 +74,87 @@ namespace RedBlackTree
             //redBlackTree.Delete(nodeToDelete2);
 
             //var inOrderAfterDeletion = redBlackTree.InOrderTraversal();
+            #endregion
 
-            JsonSerializerOptions options = new()
-            {
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
-            };
-            string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            #region Main App
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Welcome to Red Black Tree Console App");
 
-            try
+            Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Delete Node\n 4 - Write to JSON\n 5 - Exit");
+
+            var done = false;
+            while (!done)
             {
-                using (var streamWriter = new StreamWriter(_path + "rbt.json", false))
+                Console.Write("Pick option: ");
+                var option = Console.ReadLine();
+
+                switch (option)
                 {
-                    streamWriter.Write(json);
-                    Console.Write("Graph structure have been written to file");
+                    case "1":
+                        Console.Write("Enter new key: ");
+                        int newKey;
+                        if (int.TryParse(Console.ReadLine(), out newKey))
+                        {
+                            redBlackTree.Insert(new Node<int>()
+                            {
+                                Key = newKey,
+                            });
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input");
+                        }
+                        break;
+                    case "2":
+                        foreach (var node in redBlackTree.InOrderTraversal())
+                        {
+                            Console.WriteLine($"Key: {node.Key} | Color: {node.Color}");
+                        }
+                        break;
+                    case "3":
+                        Console.Write("Enter key to delete: ");
+                        int keyToDelete;
+                        if (int.TryParse(Console.ReadLine(), out keyToDelete))
+                        {
+                            var nodeToDelete = redBlackTree.Find(keyToDelete);
+                            if (nodeToDelete.IsNill())
+                            {
+                                Console.WriteLine("Key does not exist in the tree");
+                            }
+                            else
+                            {
+                                redBlackTree.Delete(nodeToDelete);
+                                Console.WriteLine($"Node with key: {keyToDelete} deleted");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input");
+                        }
+                        break;
+                    case "4":
+                        string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+
+                        try
+                        {
+                            using (var streamWriter = new StreamWriter(_jsonPath + "rbt.json", false))
+                            {
+                                streamWriter.Write(json);
+                                Console.WriteLine("Graph structure have been written to file");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.Write(ex.Message);
+                        }
+                        break;
+
+                    default:
+                        done = true;
+                        break;
                 }
             }
-            catch (Exception ex)
-            {
-                Console.Write(ex.Message);
-            }
-
-
-
-            //Console.WriteLine($"Number of elements left: {inOrderAfterDeletion.Count}");
-
-            //foreach (var node in inOrderAfterDeletion)
-            //{
-            //    Console.WriteLine($"Key: {node.Key} | Parent: {node.Parent?.Key}");
-            //}
+            #endregion
         }
     }
 }

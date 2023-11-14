@@ -1,6 +1,4 @@
 from math import radians
-from pyclbr import Class
-from tkinter.ttk import Style
 import numpy as np # installed with matplotlib
 import matplotlib.pyplot as plt
 import json
@@ -9,33 +7,37 @@ import graphviz
 
 def visualize_binary_tree(root):
     dot = graphviz.Digraph(strict=1)
-    dot.node(str(root["Key"]), style="filled", fillcolor="Black", fontcolor="white")
+    rootId = root["$id"]
+    dot.node(str(rootId), label=str(root["Key"]), style="filled", fillcolor="Black", fontcolor="white")
 
     def add_nodes_edges(node):
+        nodeId = node["$id"]
         if node["Left"]:
             color = str(node["Left"]["Color"])
             fontcolor = "black";
             if (color == "Black"):
                 fontcolor = "white"
-            dot.node(str(node["Left"]["Key"]), style="filled", fillcolor=color, fontcolor=fontcolor)
-            dot.edge(str(node["Key"]), str(node["Left"]["Key"]))
+            leftNodeId = node["Left"]["$id"]
+            dot.node(str(leftNodeId), label=str(node["Left"]["Key"]), style="filled", fillcolor=color, fontcolor=fontcolor)
+            dot.edge(str(nodeId), str(leftNodeId))
             add_nodes_edges(node["Left"])
         else:
-            nillNodeName = str("NL") + str(node["Key"])
+            nillNodeName = str("NL") + str(nodeId)
             dot.node(nillNodeName, shape = "point")
-            dot.edge(str(node["Key"]), nillNodeName)
+            dot.edge(str(nodeId), nillNodeName)
         if node["Right"]:
             color = str(node["Right"]["Color"])
             fontcolor = "black"
             if (color == "Black"):
                 fontcolor = "white"
-            dot.node(str(node["Right"]["Key"]), style="filled", fillcolor=color, fontcolor=fontcolor)
-            dot.edge(str(node["Key"]), str(node["Right"]["Key"]))
+            rightNodeId = node["Right"]["$id"]
+            dot.node(str(rightNodeId), label=str(node["Right"]["Key"]), style="filled", fillcolor=color, fontcolor=fontcolor)
+            dot.edge(str(nodeId), str(rightNodeId))
             add_nodes_edges(node["Right"])
         else:
-            nillNodeName = str("NR") + str(node["Key"])
+            nillNodeName = str("NR") + str(nodeId)
             dot.node(nillNodeName, shape="point")
-            dot.edge(str(node["Key"]), nillNodeName)
+            dot.edge(str(nodeId), nillNodeName)
 
     add_nodes_edges(root)
     dot.render('binary_tree', view=True, format='png')

@@ -346,6 +346,24 @@ namespace RedBlackTree
             x.Color = ColorEnum.Black;
         }
 
+        public Node<T> Find(T key)
+        {
+            return FindInner(Root, key);
+        }
+        private Node<T> FindInner(Node<T> parent, T key)
+        {
+            // Base Cases: root is nill or key is present at root
+            if (parent.IsNill() || parent.Key.CompareTo(key) == 0)
+                return parent;
+
+            // Key is greater than root's key
+            if (parent.Key.CompareTo(key) < 0)
+                return FindInner(parent.Right, key);
+
+            // Key is smaller than root's key
+            return FindInner(parent.Left, key);
+        }
+
         public List<Node<T>> InOrderTraversal()
         {
             return InOrderTraversalInner(new List<Node<T>>(), Root);
