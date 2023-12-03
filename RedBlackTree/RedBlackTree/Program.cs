@@ -13,7 +13,7 @@ namespace RedBlackTree
             var redBlackTree = new RedBlackTree<int>();
 
             #region Random Test
-            //for (int i = 0; i < 40; i++)
+            //for (int i = 0; i < 15; i++)
             //{
             //    var key = Random.Shared.Next(100);
             //    Console.WriteLine($"Inserting key - {key}");
@@ -28,7 +28,7 @@ namespace RedBlackTree
 
             //var deleteIndexes = new List<int>();
 
-            //for(int i = 0;i < 10; i++)
+            //for (int i = 0; i < 5; i++)
             //{
             //    var randIndex = Random.Shared.Next(inOrder.Count);
 
@@ -42,7 +42,7 @@ namespace RedBlackTree
             //    }
             //}
 
-            //foreach(var index in deleteIndexes) 
+            //foreach (var index in deleteIndexes)
             //{
             //    var nodeToDelete = inOrder[index];
             //    redBlackTree.Delete(nodeToDelete);
@@ -51,7 +51,7 @@ namespace RedBlackTree
             #endregion
 
             #region Custom Test
-            //var keys = new List<int>() { 55, 59, 55, 34, 96, 53, 51, 71, 33, 70 };
+            //var keys = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
             //Node<int> nodeToDelete2 = null;
 
             //for (int i = 0; i < 10; i++)
@@ -77,7 +77,6 @@ namespace RedBlackTree
             #endregion
 
             #region Main App
-            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Welcome to Red Black Tree Console App");
 
             Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Delete Node\n 4 - Write to JSON\n 5 - Exit");
@@ -133,7 +132,7 @@ namespace RedBlackTree
                         }
                         break;
                     case "4":
-                        string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+                        string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All });
 
                         try
                         {

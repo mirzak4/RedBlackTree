@@ -12,7 +12,8 @@ def visualize_binary_tree(root):
 
     def add_nodes_edges(node):
         nodeId = node["$id"]
-        if node["Left"]:
+        print(str(node["Key"]))
+        if not node["Left"]["IsNill"]:
             color = str(node["Left"]["Color"])
             fontcolor = "black";
             if (color == "Black"):
@@ -25,7 +26,7 @@ def visualize_binary_tree(root):
             nillNodeName = str("NL") + str(nodeId)
             dot.node(nillNodeName, shape = "point")
             dot.edge(str(nodeId), nillNodeName)
-        if node["Right"]:
+        if not node["Right"]["IsNill"]:
             color = str(node["Right"]["Color"])
             fontcolor = "black"
             if (color == "Black"):
