@@ -13,7 +13,7 @@ namespace RedBlackTree
             var redBlackTree = new RedBlackTree<int>();
 
             #region Random Test
-            //for (int i = 0; i < 15; i++)
+            //for (int i = 0; i < 29; i++)
             //{
             //    var key = Random.Shared.Next(100);
             //    Console.WriteLine($"Inserting key - {key}");
@@ -28,7 +28,7 @@ namespace RedBlackTree
 
             //var deleteIndexes = new List<int>();
 
-            //for (int i = 0; i < 5; i++)
+            //for (int i = 0; i < 11; i++)
             //{
             //    var randIndex = Random.Shared.Next(inOrder.Count);
 
@@ -48,6 +48,21 @@ namespace RedBlackTree
             //    redBlackTree.Delete(nodeToDelete);
             //    Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
             //}
+
+            //string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All });
+
+            //try
+            //{
+            //    using (var streamWriter = new StreamWriter(_jsonPath + "rbt.json", false))
+            //    {
+            //        streamWriter.Write(json);
+            //        Console.WriteLine("Graph structure have been written to file");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.Write(ex.Message);
+            //}
             #endregion
 
             #region Custom Test
@@ -56,8 +71,8 @@ namespace RedBlackTree
 
             //for (int i = 0; i < 10; i++)
             //{
-            //    //var key = Random.Shared.Next(100);
-            //    //Console.WriteLine($"Inserting key - {key}");
+            //    var key = Random.Shared.Next(100);
+            //    Console.WriteLine($"Inserting key - {key}");
             //    var nodeToInsert = new Node<int>()
             //    {
             //        Key = keys[i],
@@ -79,7 +94,7 @@ namespace RedBlackTree
             #region Main App
             Console.WriteLine("Welcome to Red Black Tree Console App");
 
-            Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Delete Node\n 4 - Write to JSON\n 5 - Exit");
+            Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Delete Node\n 4 - Write to JSON file\n 5 - Exit");
 
             var done = false;
             while (!done)

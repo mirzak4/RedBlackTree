@@ -123,7 +123,7 @@ namespace RedBlackTree
                     var y = z.Parent.Parent.Right;
 
                     // Nill nodes are considered as black
-                    if (!y.IsNill && y.Color == ColorEnum.Red)
+                    if (y.Color == ColorEnum.Red)
                     {
                         z.Parent.Color = ColorEnum.Black;
                         y.Color = ColorEnum.Black;
@@ -148,7 +148,7 @@ namespace RedBlackTree
                     // Uncle is now on the left side
                     var y = z.Parent.Parent.Left;
 
-                    if (!y.IsNill && y.Color == ColorEnum.Red)
+                    if (y.Color == ColorEnum.Red)
                     {
                         z.Parent.Color = ColorEnum.Black;
                         y.Color = ColorEnum.Black;
@@ -188,10 +188,7 @@ namespace RedBlackTree
                 u.Parent.Right = v;
             }
 
-            if (!v.IsNill)
-            {
-                v.Parent = u.Parent;
-            }
+            v.Parent = u.Parent;
         }
 
         public Node<T> TreeMinimum(Node<T> x)
@@ -231,13 +228,9 @@ namespace RedBlackTree
 
                 if (y.Parent == z)
                 {
-                    // y is z's right child
-                    if (!x.IsNill)
-                    {
-                        // Since y is now taking place of z, and x will be its right child,
-                        // we don't want Transplant method to set x parent reference to removed node z
-                        x.Parent = y;
-                    }
+                    // Since y is now taking place of z, and x will be its right child,
+                    // we don't want Transplant method to set x parent reference to removed node z
+                    x.Parent = y;
                 }
                 else
                 {
@@ -279,7 +272,7 @@ namespace RedBlackTree
                     }
 
                     // 2nd case: w's both childs are black
-                    if ((w.Left.IsNill || w.Left.Color == ColorEnum.Black) && (w.Right.IsNill || w.Right.Color == ColorEnum.Black))
+                    if ((w.Left.Color == ColorEnum.Black) && (w.Right.Color == ColorEnum.Black))
                     {
                         w.Color = ColorEnum.Red;
                         x = x.Parent;
@@ -287,7 +280,7 @@ namespace RedBlackTree
                     else
                     {
                         // 3rd case: w's right child is black and left child is red - conver to case 4
-                        if (w.Right.IsNill || w.Right.Color == ColorEnum.Black)
+                        if (w.Right.Color == ColorEnum.Black)
                         {
                             w.Left.Color = ColorEnum.Black;
                             w.Color = ColorEnum.Red;
@@ -317,7 +310,7 @@ namespace RedBlackTree
                     }
 
                     // 2nd case: w's both childs are black
-                    if ((w.Left.IsNill || w.Left.Color == ColorEnum.Black) && (w.Right.IsNill || w.Right.Color == ColorEnum.Black))
+                    if ((w.Left.Color == ColorEnum.Black) && (w.Right.Color == ColorEnum.Black))
                     {
                         w.Color = ColorEnum.Red;
                         x = x.Parent;
@@ -325,7 +318,7 @@ namespace RedBlackTree
                     else
                     {
                         // 3rd case: w's left child is black and right child is red - conver to case 4
-                        if (w.Left.IsNill || w.Left.Color == ColorEnum.Black)
+                        if (w.Left.Color == ColorEnum.Black)
                         {
                             w.Right.Color = ColorEnum.Black;
                             w.Color = ColorEnum.Red;
