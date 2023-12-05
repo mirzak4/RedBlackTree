@@ -7,62 +7,63 @@ namespace RedBlackTree
 {
     internal class Program
     {
+        // Specify your directory to the project
         private static readonly string _jsonPath = "C:\\Users\\mirza.kadric\\NASP\\RedBlackTree\\RedBlackTree\\RedBlackTree\\Content\\";
         public static void Main(string[] args)
         {
             var redBlackTree = new RedBlackTree<int>();
 
             #region Random Test
-            //for (int i = 0; i < 29; i++)
-            //{
-            //    var key = Random.Shared.Next(100);
-            //    Console.WriteLine($"Inserting key - {key}");
-            //    redBlackTree.Insert(new Node<int>()
-            //    {
-            //        Key = key,
-            //        Color = ColorEnum.Red
-            //    });
-            //}
+            for (int i = 0; i < 30; i++)
+            {
+                var key = Random.Shared.Next(100);
+                Console.WriteLine($"Inserting key - {key}");
+                redBlackTree.Insert(new Node<int>()
+                {
+                    Key = key,
+                    Color = ColorEnum.Red
+                });
+            }
 
-            //var inOrder = redBlackTree.InOrderTraversal();
+            var inOrder = redBlackTree.InOrderTraversal();
 
-            //var deleteIndexes = new List<int>();
+            var deleteIndexes = new List<int>();
 
-            //for (int i = 0; i < 11; i++)
-            //{
-            //    var randIndex = Random.Shared.Next(inOrder.Count);
+            for (int i = 0; i < 13; i++)
+            {
+                var randIndex = Random.Shared.Next(inOrder.Count);
 
-            //    if (!deleteIndexes.Contains(randIndex))
-            //    {
-            //        deleteIndexes.Add(randIndex);
-            //    }
-            //    else
-            //    {
-            //        i--;
-            //    }
-            //}
+                if (!deleteIndexes.Contains(randIndex))
+                {
+                    deleteIndexes.Add(randIndex);
+                }
+                else
+                {
+                    i--;
+                }
+            }
 
-            //foreach (var index in deleteIndexes)
-            //{
-            //    var nodeToDelete = inOrder[index];
-            //    redBlackTree.Delete(nodeToDelete);
-            //    Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
-            //}
+            foreach (var index in deleteIndexes)
+            {
+                var nodeToDelete = inOrder[index];
+                redBlackTree.Delete(nodeToDelete);
+                Console.WriteLine($"Node to delete is: {nodeToDelete.Key}");
+            }
 
-            //string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All });
+            string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All });
 
-            //try
-            //{
-            //    using (var streamWriter = new StreamWriter(_jsonPath + "rbt.json", false))
-            //    {
-            //        streamWriter.Write(json);
-            //        Console.WriteLine("Graph structure have been written to file");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.Write(ex.Message);
-            //}
+            try
+            {
+                using (var streamWriter = new StreamWriter(_jsonPath + "rbt.json", false))
+                {
+                    streamWriter.Write(json);
+                    Console.WriteLine("Graph structure have been written to file");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+            }
             #endregion
 
             #region Custom Test
@@ -92,82 +93,82 @@ namespace RedBlackTree
             #endregion
 
             #region Main App
-            Console.WriteLine("Welcome to Red Black Tree Console App");
+            //Console.WriteLine("Welcome to Red Black Tree Console App");
 
-            Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Delete Node\n 4 - Write to JSON file\n 5 - Exit");
+            //Console.WriteLine("Options:\n 1 - Insert New Node\n 2 - Inorder Traversal\n 3 - Delete Node\n 4 - Write to JSON file\n 5 - Exit");
 
-            var done = false;
-            while (!done)
-            {
-                Console.Write("Pick option: ");
-                var option = Console.ReadLine();
+            //var done = false;
+            //while (!done)
+            //{
+            //    Console.Write("Pick option: ");
+            //    var option = Console.ReadLine();
 
-                switch (option)
-                {
-                    case "1":
-                        Console.Write("Enter new key: ");
-                        int newKey;
-                        if (int.TryParse(Console.ReadLine(), out newKey))
-                        {
-                            redBlackTree.Insert(new Node<int>()
-                            {
-                                Key = newKey,
-                            });
-                        }
-                        else
-                        {
-                            Console.WriteLine("Wrong input");
-                        }
-                        break;
-                    case "2":
-                        foreach (var node in redBlackTree.InOrderTraversal())
-                        {
-                            Console.WriteLine($"Key: {node.Key} | Color: {node.Color}");
-                        }
-                        break;
-                    case "3":
-                        Console.Write("Enter key to delete: ");
-                        int keyToDelete;
-                        if (int.TryParse(Console.ReadLine(), out keyToDelete))
-                        {
-                            var nodeToDelete = redBlackTree.Find(keyToDelete);
-                            if (nodeToDelete.IsNill())
-                            {
-                                Console.WriteLine("Key does not exist in the tree");
-                            }
-                            else
-                            {
-                                redBlackTree.Delete(nodeToDelete);
-                                Console.WriteLine($"Node with key: {keyToDelete} deleted");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Wrong input");
-                        }
-                        break;
-                    case "4":
-                        string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All });
+            //    switch (option)
+            //    {
+            //        case "1":
+            //            Console.Write("Enter new key: ");
+            //            int newKey;
+            //            if (int.TryParse(Console.ReadLine(), out newKey))
+            //            {
+            //                redBlackTree.Insert(new Node<int>()
+            //                {
+            //                    Key = newKey,
+            //                });
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("Wrong input");
+            //            }
+            //            break;
+            //        case "2":
+            //            foreach (var node in redBlackTree.InOrderTraversal())
+            //            {
+            //                Console.WriteLine($"Key: {node.Key} | Color: {node.Color}");
+            //            }
+            //            break;
+            //        case "3":
+            //            Console.Write("Enter key to delete: ");
+            //            int keyToDelete;
+            //            if (int.TryParse(Console.ReadLine(), out keyToDelete))
+            //            {
+            //                var nodeToDelete = redBlackTree.Find(keyToDelete);
+            //                if (nodeToDelete.IsNill())
+            //                {
+            //                    Console.WriteLine("Key does not exist in the tree");
+            //                }
+            //                else
+            //                {
+            //                    redBlackTree.Delete(nodeToDelete);
+            //                    Console.WriteLine($"Node with key: {keyToDelete} deleted");
+            //                }
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("Wrong input");
+            //            }
+            //            break;
+            //        case "4":
+            //            string json = JsonConvert.SerializeObject(redBlackTree.Root, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All });
 
-                        try
-                        {
-                            using (var streamWriter = new StreamWriter(_jsonPath + "rbt.json", false))
-                            {
-                                streamWriter.Write(json);
-                                Console.WriteLine("Graph structure have been written to file");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.Write(ex.Message);
-                        }
-                        break;
+            //            try
+            //            {
+            //                using (var streamWriter = new StreamWriter(_jsonPath + "rbt.json", false))
+            //                {
+            //                    streamWriter.Write(json);
+            //                    Console.WriteLine("Graph structure have been written to file");
+            //                }
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                Console.Write(ex.Message);
+            //            }
+            //            break;
 
-                    default:
-                        done = true;
-                        break;
-                }
-            }
+            //        default:
+            //            done = true;
+            //            break;
+            //    }
+            //}
             #endregion
         }
     }
